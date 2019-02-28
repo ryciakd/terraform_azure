@@ -1,0 +1,4 @@
+###############################################################################
+## Plan changes
+###############################################################################
+terraform plan -var-file="..\free_account.tfvars" -var-file="environment_configs\dev\development.tfvars"

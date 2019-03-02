@@ -1,0 +1,7 @@
+# list all available images (for uksouth and jetware-srl publisher)
+ 
+ > azure vm image list uksouth jetware-srl -vv
+
+# accept terms for VM image using AzureRmMarketplaceTerms
+
+> Get-AzureRmMarketplaceTerms -Publisher "jetware-srl" -Product "mongodb" -Name "mongodb34-ubuntu-1604" | Set-AzureRmMarketplaceTerms -Accept

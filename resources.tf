@@ -135,6 +135,7 @@ resource "azurerm_virtual_machine" "myterraformvm" {
         version   = "latest"
     }
 
+
     os_profile {
         computer_name  = "myvm"
         admin_username = "azureuser"
@@ -156,5 +157,26 @@ resource "azurerm_virtual_machine" "myterraformvm" {
 
     tags {
         environment = "Terraform Demo"
+    }        
+}
+
+resource "azurerm_virtual_machine_extension" "MYADJOINEDVMCSE1" {
+  name                 = "MYADJOINEDVMCSE1"
+  location             = "${var.location}"
+  resource_group_name  = "${azurerm_resource_group.myterraformgroup.name}"
+  virtual_machine_name = "${azurerm_virtual_machine.myterraformvm.name}"
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  depends_on           = ["azurerm_virtual_machine.myterraformvm"]
+
+  # CustomVMExtension Documetnation: https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows
+
+  settings = <<SETTINGS
+    {
+        "fileUris":["https://csbd36c792c0620x46e2xb50.blob.core.windows.net/public-files/post_deploy_install_mongo.sh"],
+        "commandToExecute": "bash post_deploy_install_mongo.sh"
     }
+SETTINGS
 }

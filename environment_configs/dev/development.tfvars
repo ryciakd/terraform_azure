@@ -1,1 +1,3 @@
-environment_tag = "dev"
+environment = "dev"
+
+instance_count = 2
